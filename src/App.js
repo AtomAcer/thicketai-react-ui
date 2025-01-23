@@ -18,6 +18,7 @@ import {
 import { AttachFile, Mic, Menu, InsertDriveFile, FolderOpen } from "@mui/icons-material";
 import useAuth from "./hooks/useAuth"; // Import authentication hook
 
+// chatbot ui
 const ChatbotUI = () => {
   const { user, loading } = useAuth(); // Get user authentication state
   const [voice, setVoice] = useState("Adam");
