@@ -16,9 +16,10 @@ import {
   Box,
 } from "@mui/material";
 import { AttachFile, Mic, Menu, InsertDriveFile, FolderOpen } from "@mui/icons-material";
+import useAuth from "./hooks/useAuth"; // Import authentication hook
 
-// chatbot UI
 const ChatbotUI = () => {
+  const { user, loading } = useAuth(); // Get user authentication state
   const [voice, setVoice] = useState("Adam");
   const [message, setMessage] = useState("");
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -27,12 +28,23 @@ const ChatbotUI = () => {
 
   return (
     <div style={{ display: "flex", height: "100vh", flexDirection: "column" }}>
-      {/* Top Bar with Centered Title */}
+      {/* Top Bar with Centered Title and Authentication */}
       <AppBar position="static" sx={{ backgroundColor: "#4A5280" }}>
-        <Toolbar sx={{ justifyContent: "center" }}>
-          <Typography variant="h6" sx={{ textAlign: "center" }}>
-            {truncatedTitle}
-          </Typography>
+        <Toolbar sx={{ justifyContent: "space-between" }}>
+          <Typography variant="h6">{truncatedTitle}</Typography>
+
+          {/* Authentication Button */}
+          {!loading && (
+            user ? (
+              <Button color="inherit" onClick={() => (window.location.href = "/.auth/logout")}>
+                Logout ({user.userDetails})
+              </Button>
+            ) : (
+              <Button color="inherit" onClick={() => (window.location.href = "/.auth/login/github")}>
+                Login with GitHub
+              </Button>
+            )
+          )}
         </Toolbar>
       </AppBar>
 
@@ -71,8 +83,6 @@ const ChatbotUI = () => {
       {/* Main Chat Area */}
       <div style={{ flexGrow: 1, display: "flex", justifyContent: "center", alignItems: "center", backgroundColor: "#EAEAEA" }}>
         <Paper elevation={3} sx={{ padding: 3, display: "flex", gap: 3, borderRadius: 2 }}>
-
-          {/* Common styles for equal height */}
           {[
             { icon: <InsertDriveFile sx={{ fontSize: 40, color: "#4A5280" }} />, text: "Upload Document", button: true },
             { icon: <FolderOpen sx={{ fontSize: 40, color: "#4A5280" }} />, text: "Use Existing", select: true }
@@ -84,16 +94,16 @@ const ChatbotUI = () => {
                 padding: 1,
                 backgroundColor: "#FFF",
                 borderRadius: 2,
-                boxShadow: 4, // Increase shadow intensity
+                boxShadow: 4,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "space-between",
                 minWidth: "180px",
                 minHeight: "150px",
-                transition: "box-shadow 0.3s ease-in-out", // Smooth hover effect
+                transition: "box-shadow 0.3s ease-in-out",
                 "&:hover": {
-                  boxShadow: 20, // Stronger shadow on hover for a nice effect
+                  boxShadow: 20,
                 }
               }}
             >
@@ -112,10 +122,8 @@ const ChatbotUI = () => {
               )}
             </Box>
           ))}
-
         </Paper>
       </div>
-
 
       {/* Chat Input */}
       <div style={{ display: "flex", alignItems: "center", padding: 8, backgroundColor: "#FFF", borderTop: "1px solid #CCC" }}>
