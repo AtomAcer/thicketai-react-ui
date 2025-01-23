@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 import { AttachFile, Mic, Menu, InsertDriveFile, FolderOpen } from "@mui/icons-material";
 
+// chatbot UI
 const ChatbotUI = () => {
   const [voice, setVoice] = useState("Adam");
   const [message, setMessage] = useState("");
