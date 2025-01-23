@@ -1,0 +1,22 @@
+{
+    "routes": [
+        {
+            "route": "/.auth/login/github",
+            "statusCode": 200
+        },
+        {
+            "route": "/.auth/logout",
+            "statusCode": 200
+        }
+    ],
+    "auth": {
+        "identityProviders": {
+            "github": {
+                "registration": {
+                    "clientIdSettingName": "GITHUB_CLIENT_ID",
+                    "clientSecretSettingName": "GITHUB_CLIENT_SECRET"
+                }
+            }
+        }
+    }
+}
